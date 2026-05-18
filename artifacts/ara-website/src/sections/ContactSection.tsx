@@ -11,81 +11,126 @@ export function ContactSection() {
     setSubmitted(true);
   };
 
-  return (
-    <section id="contact" className="py-28 bg-background border-t border-border">
-      <div className="container mx-auto px-6 max-w-6xl">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+  const inputStyle: React.CSSProperties = {
+    width: "100%",
+    background: "transparent",
+    border: "none",
+    borderBottom: "1px solid var(--color-border)",
+    padding: "0.75rem 0",
+    fontFamily: "var(--app-font-sans)",
+    fontSize: "0.9375rem",
+    color: "var(--color-foreground)",
+    outline: "none",
+    borderRadius: 0,
+  };
 
+  const labelStyle: React.CSSProperties = {
+    fontFamily: "var(--app-font-sans)",
+    fontSize: "0.625rem",
+    letterSpacing: "0.18em",
+    textTransform: "uppercase",
+    color: "var(--color-muted-foreground)",
+    display: "block",
+    marginBottom: "0.5rem",
+  };
+
+  return (
+    <section id="contact" className="bg-background" style={{ borderTop: "1px solid var(--color-border)", padding: "6rem 2rem" }}>
+      <div style={{ maxWidth: "60rem", margin: "0 auto" }}>
+
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6 }}
+          style={{ marginBottom: "4rem" }}
+        >
+          <span
+            className="font-sans"
+            style={{ fontSize: "0.65rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--color-muted-foreground)", display: "block", marginBottom: "1.25rem" }}
+          >
+            {t("CONTACT", "CONTACTO")}
+          </span>
+          <h2
+            className="font-serif font-semibold"
+            style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)", lineHeight: 1.2, color: "var(--color-foreground)", marginBottom: "1rem" }}
+          >
+            {t("Get in touch", "Entre em contacto")}
+          </h2>
+          <p
+            className="font-sans"
+            style={{ fontSize: "0.9375rem", color: "var(--color-muted-foreground)", lineHeight: 1.65 }}
+          >
+            {t(
+              "For an introductory conversation, please reach out directly.",
+              "Para uma conversa inicial, pode escrever directamente."
+            )}
+          </p>
+        </motion.div>
+
+        {/* Two-column: contacts + form */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 22rem), 1fr))", gap: "4rem" }}>
+
+          {/* Direct contacts */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
+            viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6 }}
           >
-            <span className="font-sans text-xs tracking-[0.2em] text-muted-foreground uppercase block mb-5">
-              {t("CONTACT", "CONTACTO")}
-            </span>
-            <h2 className="font-serif text-4xl md:text-5xl text-foreground font-semibold leading-tight mb-6">
-              {t("Get in touch", "Entre em contacto")}
-            </h2>
-            <p className="font-sans text-base text-foreground/70 mb-14 max-w-sm">
-              {t(
-                "For an introductory conversation, please reach out directly.",
-                "Para uma conversa inicial, pode escrever directamente."
-              )}
-            </p>
-
-            <div className="space-y-8 font-sans text-sm">
-              <div>
-                <span className="text-muted-foreground uppercase tracking-widest block mb-1.5 text-xs">Email</span>
+            {[
+              { label: "Email", value: "antonio@ararealestate.pt", href: "mailto:antonio@ararealestate.pt", testId: "contact-email" },
+              { label: t("Mobile", "Telemóvel"), value: "+351 916 737 791", href: "tel:+351916737791", testId: "contact-phone" },
+            ].map(({ label, value, href, testId }) => (
+              <div key={label} style={{ marginBottom: "2.25rem" }}>
+                <span style={labelStyle}>{label}</span>
                 <a
-                  href="mailto:antonio@ararealestate.pt"
-                  data-testid="contact-email"
-                  className="text-foreground hover:text-primary transition-colors text-base"
+                  href={href}
+                  data-testid={testId}
+                  className="font-sans"
+                  style={{ fontSize: "0.9375rem", color: "var(--color-foreground)", textDecoration: "none", display: "block" }}
                 >
-                  antonio@ararealestate.pt
+                  {value}
                 </a>
               </div>
-              <div>
-                <span className="text-muted-foreground uppercase tracking-widest block mb-1.5 text-xs">
-                  {t("Mobile", "Telemóvel")}
-                </span>
-                <a
-                  href="tel:+351916737791"
-                  data-testid="contact-phone"
-                  className="text-foreground hover:text-primary transition-colors text-base"
-                >
-                  +351 916 737 791
-                </a>
-              </div>
-              <div>
-                <span className="text-muted-foreground uppercase tracking-widest block mb-1.5 text-xs">LinkedIn</span>
-                <a
-                  href="https://www.linkedin.com/in/ant%C3%B3nio-rebello-de-andrade-05a00741/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-testid="contact-linkedin"
-                  className="text-foreground hover:text-primary transition-colors text-base flex items-center gap-2"
-                >
-                  António Rebello de Andrade <span className="text-primary">→</span>
-                </a>
-              </div>
+            ))}
+            <div>
+              <span style={labelStyle}>LinkedIn</span>
+              <a
+                href="https://www.linkedin.com/in/ant%C3%B3nio-rebello-de-andrade-05a00741/"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-testid="contact-linkedin"
+                className="font-sans"
+                style={{ fontSize: "0.9375rem", color: "var(--color-foreground)", textDecoration: "none", display: "flex", alignItems: "center", gap: "0.5rem" }}
+              >
+                António Rebello de Andrade
+                <span style={{ color: "var(--color-primary)" }}>→</span>
+              </a>
             </div>
           </motion.div>
 
+          {/* Form */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="border border-border bg-background p-8 md:p-12"
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, delay: 0.12 }}
+            style={{ border: "1px solid var(--color-border)", padding: "2.5rem" }}
           >
             {submitted ? (
-              <div className="h-full flex flex-col items-center justify-center text-center py-20">
-                <h3 className="font-serif text-3xl text-primary mb-4">
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "4rem 0" }}>
+                <h3
+                  className="font-serif"
+                  style={{ fontSize: "1.75rem", color: "var(--color-primary)", marginBottom: "1rem" }}
+                >
                   {t("Thank you.", "Obrigado.")}
                 </h3>
-                <p className="font-sans text-sm text-muted-foreground">
+                <p
+                  className="font-sans"
+                  style={{ fontSize: "0.875rem", color: "var(--color-muted-foreground)", lineHeight: 1.65 }}
+                >
                   {t(
                     "Your message has been received. I will be in touch shortly.",
                     "A sua mensagem foi recebida. Entrarei em contacto brevemente."
@@ -93,94 +138,80 @@ export function ContactSection() {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.75rem" }}>
                 <div>
-                  <label className="font-sans text-xs tracking-widest text-muted-foreground uppercase block mb-2">
-                    {t("Name", "Nome")} *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    data-testid="input-name"
-                    className="w-full bg-transparent border-b border-border py-3 px-0 font-sans text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary transition-colors"
-                  />
+                  <label style={labelStyle}>{t("Name", "Nome")} *</label>
+                  <input type="text" required data-testid="input-name" style={inputStyle} />
                 </div>
                 <div>
-                  <label className="font-sans text-xs tracking-widest text-muted-foreground uppercase block mb-2">
-                    Email *
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    data-testid="input-email"
-                    className="w-full bg-transparent border-b border-border py-3 px-0 font-sans text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary transition-colors"
-                  />
+                  <label style={labelStyle}>Email *</label>
+                  <input type="email" required data-testid="input-email" style={inputStyle} />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }}>
                   <div>
-                    <label className="font-sans text-xs tracking-widest text-muted-foreground uppercase block mb-2">
-                      {t("Phone", "Telefone")} *
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      data-testid="input-phone"
-                      className="w-full bg-transparent border-b border-border py-3 px-0 font-sans text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary transition-colors"
-                    />
+                    <label style={labelStyle}>{t("Phone", "Telefone")} *</label>
+                    <input type="tel" required data-testid="input-phone" style={inputStyle} />
                   </div>
                   <div>
-                    <label className="font-sans text-xs tracking-widest text-muted-foreground uppercase block mb-2">
-                      {t("Company (optional)", "Empresa (opcional)")}
-                    </label>
-                    <input
-                      type="text"
-                      data-testid="input-company"
-                      className="w-full bg-transparent border-b border-border py-3 px-0 font-sans text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary transition-colors"
-                    />
+                    <label style={labelStyle}>{t("Company (optional)", "Empresa (opcional)")}</label>
+                    <input type="text" data-testid="input-company" style={inputStyle} />
                   </div>
                 </div>
                 <div>
-                  <label className="font-sans text-xs tracking-widest text-muted-foreground uppercase block mb-2">
-                    {t("How can I help?", "Como posso ajudar?")} *
-                  </label>
+                  <label style={labelStyle}>{t("How can I help?", "Como posso ajudar?")} *</label>
                   <textarea
                     required
                     rows={4}
                     data-testid="input-message"
-                    className="w-full bg-transparent border-b border-border py-3 px-0 font-sans text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary transition-colors resize-none"
+                    style={{ ...inputStyle, resize: "none" }}
                   />
                 </div>
-                <div className="pt-4">
+                <div>
                   <button
                     type="submit"
                     data-testid="button-submit"
-                    className="w-full bg-primary text-primary-foreground py-4 font-sans text-xs tracking-[0.2em] uppercase hover:bg-primary/90 transition-colors"
+                    style={{
+                      width: "100%",
+                      background: "var(--color-primary)",
+                      color: "var(--color-primary-foreground)",
+                      border: "none",
+                      padding: "1rem",
+                      fontFamily: "var(--app-font-sans)",
+                      fontSize: "0.65rem",
+                      letterSpacing: "0.2em",
+                      textTransform: "uppercase",
+                      cursor: "pointer",
+                    }}
                   >
                     {t("SEND MESSAGE", "ENVIAR MENSAGEM")}
                   </button>
+                  <p
+                    className="font-sans"
+                    style={{ textAlign: "center", fontSize: "0.7rem", color: "var(--color-muted-foreground)", marginTop: "1rem" }}
+                  >
+                    {t("All enquiries treated as confidential.", "Todos os contactos tratados de forma confidencial.")}
+                  </p>
                 </div>
-                <p className="text-center font-sans text-xs text-muted-foreground">
-                  {t("All enquiries treated as confidential.", "Todos os contactos tratados de forma confidencial.")}
-                </p>
               </form>
             )}
           </motion.div>
         </div>
-      </div>
 
-      <div className="container mx-auto px-6 mt-20">
+        {/* Closing line */}
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
-          className="font-serif italic text-xl text-muted-foreground text-center py-8 border-t border-border"
+          className="font-serif"
+          style={{ borderTop: "1px solid var(--color-border)", marginTop: "5rem", paddingTop: "2.5rem", textAlign: "center", fontSize: "1.125rem", fontStyle: "italic", color: "var(--color-muted-foreground)" }}
         >
           {t(
             "More than a decade of institutional real estate.",
             "Mais de uma década em imobiliário institucional."
           )}
         </motion.p>
+
       </div>
     </section>
   );

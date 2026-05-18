@@ -32,25 +32,36 @@ export function ServicesSection() {
   const { t } = useLanguage();
 
   return (
-    <section id="services" className="py-28 bg-background">
-      <div className="container mx-auto px-6 max-w-5xl">
+    <section id="services" className="bg-background" style={{ padding: "6rem 2rem" }}>
+      <div style={{ maxWidth: "60rem", margin: "0 auto" }}>
+
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6 }}
-          className="mb-20"
+          style={{ marginBottom: "4rem" }}
         >
-          <span className="font-sans text-xs tracking-[0.2em] text-muted-foreground uppercase block mb-5">
+          <span
+            className="font-sans"
+            style={{ fontSize: "0.65rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--color-muted-foreground)", display: "block", marginBottom: "1.25rem" }}
+          >
             {t("SERVICES", "SERVIÇOS")}
           </span>
-          <h2 className="font-serif text-3xl md:text-4xl text-foreground font-semibold leading-tight mb-6 max-w-3xl">
+          <h2
+            className="font-serif font-semibold"
+            style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)", lineHeight: 1.2, color: "var(--color-foreground)", marginBottom: "1.25rem", maxWidth: "36rem" }}
+          >
             {t(
               "Senior advisory across the full real estate investment cycle.",
               "Advisory em todas as fases do ciclo de investimento imobiliário."
             )}
           </h2>
-          <p className="font-sans text-base text-muted-foreground max-w-xl">
+          <p
+            className="font-sans"
+            style={{ fontSize: "0.9375rem", color: "var(--color-muted-foreground)", lineHeight: 1.65, maxWidth: "30rem" }}
+          >
             {t(
               "Four areas of practice, addressed either independently or in an integrated manner.",
               "Quatro áreas de actuação, trabalhadas de forma autónoma ou articulada."
@@ -58,35 +69,57 @@ export function ServicesSection() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+        {/* Service cards */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 26rem), 1fr))",
+            gap: "1.25rem",
+            marginBottom: "4rem",
+          }}
+        >
           {services.map((service, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, delay: idx * 0.08 }}
-              className="border border-border bg-background p-8 hover:border-primary/30 transition-colors"
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: idx * 0.07 }}
               data-testid={`service-card-${idx}`}
+              style={{
+                border: "1px solid var(--color-border)",
+                padding: "2rem 2rem 2.25rem",
+                background: "var(--color-background)",
+              }}
             >
-              <h3 className="font-sans text-sm font-medium tracking-wide text-foreground uppercase mb-4">
+              <h3
+                className="font-sans font-medium"
+                style={{ fontSize: "0.75rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--color-foreground)", marginBottom: "1rem" }}
+              >
                 {t(service.titleEn, service.titlePt)}
               </h3>
-              <p className="font-sans text-sm text-foreground/70 leading-relaxed">
+              <p
+                className="font-sans"
+                style={{ fontSize: "0.875rem", color: "var(--color-foreground)", opacity: 0.65, lineHeight: 1.75 }}
+              >
                 {t(service.descEn, service.descPt)}
               </p>
             </motion.div>
           ))}
         </div>
 
+        {/* Footer note */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="border-t border-border pt-10 flex flex-col md:flex-row md:items-center justify-between gap-6"
+          style={{ borderTop: "1px solid var(--color-border)", paddingTop: "2.5rem", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-start", gap: "1.5rem" }}
         >
-          <p className="font-sans text-sm text-muted-foreground max-w-2xl leading-relaxed">
+          <p
+            className="font-sans"
+            style={{ fontSize: "0.8125rem", color: "var(--color-muted-foreground)", lineHeight: 1.7, maxWidth: "36rem" }}
+          >
             {t(
               "Asset classes worked across the career include residential, office, hospitality, logistics, retail and others.",
               "Classes de activos trabalhadas ao longo do percurso incluem residencial, escritórios, hotelaria, logística, retalho, entre outros."
@@ -97,11 +130,13 @@ export function ServicesSection() {
               const el = document.getElementById("contact");
               if (el) el.scrollIntoView({ behavior: "smooth" });
             }}
-            className="font-sans text-xs tracking-widest text-primary uppercase hover:opacity-60 transition-opacity whitespace-nowrap"
+            className="font-sans"
+            style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--color-primary)", whiteSpace: "nowrap" }}
           >
             {t("Contact →", "Contactar →")}
           </button>
         </motion.div>
+
       </div>
     </section>
   );
