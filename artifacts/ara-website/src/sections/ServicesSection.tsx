@@ -94,10 +94,9 @@ export function ServicesSection() {
               transition={{ duration: 0.5, delay: idx * 0.07 }}
               data-testid={`service-card-${idx}`}
               style={{
-                border: "1.5px solid var(--color-primary)",
+                border: "2px solid #0F2D33",
                 padding: "2rem 1.75rem 2.25rem",
                 background: "var(--color-background)",
-                opacity: 1,
               }}
             >
               <h3

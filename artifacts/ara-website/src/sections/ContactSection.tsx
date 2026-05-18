@@ -124,7 +124,7 @@ export function ContactSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6, delay: 0.12 }}
-            style={{ border: "1.5px solid var(--color-primary)", padding: "2.5rem" }}
+            style={{ border: "2px solid #0F2D33", padding: "clamp(1.25rem, 4vw, 2.5rem)" }}
           >
             {submitted ? (
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "4rem 0" }}>
@@ -154,7 +154,7 @@ export function ContactSection() {
                   <label style={labelStyle}>Email *</label>
                   <input type="email" required data-testid="input-email" style={inputStyle} />
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(9rem, 1fr))", gap: "1.5rem" }}>
                   <div>
                     <label style={labelStyle}>{t("Phone", "Telefone")} *</label>
                     <input type="tel" required data-testid="input-phone" style={inputStyle} />
