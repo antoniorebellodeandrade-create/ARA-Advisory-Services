@@ -100,7 +100,7 @@ export function HeroSection() {
         <div style={{ maxWidth: "52rem", margin: "0 auto" }}>
           <p
             className="font-sans"
-            style={{ fontSize: "0.8125rem", color: "rgba(246,244,239,0.5)", lineHeight: 1.65, marginBottom: "1rem", maxWidth: "36rem" }}
+            style={{ fontSize: "0.9375rem", color: "rgba(246,244,239,0.72)", lineHeight: 1.7, marginBottom: "1.25rem", maxWidth: "40rem" }}
           >
             {t(
               "ARA Real Estate advises investors, owners and selected market players across the full real estate investment cycle.",
@@ -118,19 +118,19 @@ export function HeroSection() {
                     border: "none",
                     padding: 0,
                     cursor: "pointer",
-                    fontSize: "0.625rem",
-                    letterSpacing: "0.15em",
+                    fontSize: "0.7rem",
+                    letterSpacing: "0.12em",
                     textTransform: "uppercase",
-                    color: "rgba(246,244,239,0.28)",
+                    color: "rgba(246,244,239,0.5)",
                     transition: "color 0.2s",
                   }}
-                  onMouseEnter={e => ((e.currentTarget as HTMLButtonElement).style.color = "rgba(246,244,239,0.65)")}
-                  onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.color = "rgba(246,244,239,0.28)")}
+                  onMouseEnter={e => ((e.currentTarget as HTMLButtonElement).style.color = "rgba(246,244,239,0.85)")}
+                  onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.color = "rgba(246,244,239,0.5)")}
                 >
                   {t(s.en, s.pt)}
                 </button>
                 {i < SERVICES.length - 1 && (
-                  <span style={{ color: "rgba(246,244,239,0.15)", fontSize: "0.7rem", margin: "0 0.875rem" }}>·</span>
+                  <span style={{ color: "rgba(246,244,239,0.25)", fontSize: "0.75rem", margin: "0 0.875rem" }}>·</span>
                 )}
               </span>
             ))}
