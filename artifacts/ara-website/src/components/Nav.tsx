@@ -1,117 +1,138 @@
-import { Link, useLocation } from "wouter";
 import { useLanguage } from "../context/LanguageContext";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+const sections = [
+  { id: "home", labelEn: "HOME", labelPt: "HOME" },
+  { id: "services", labelEn: "SERVICES", labelPt: "SERVIÇOS" },
+  { id: "about", labelEn: "ABOUT", labelPt: "SOBRE" },
+  { id: "contact", labelEn: "CONTACT", labelPt: "CONTACTO" },
+];
+
+function scrollTo(id: string) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: "smooth" });
+}
+
 export function Nav() {
-  const [location] = useLocation();
   const { language, setLanguage, t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
-  const links = [
-    { href: "/", labelEn: "HOME", labelPt: "HOME" },
-    { href: "/services", labelEn: "SERVICES", labelPt: "SERVIÇOS" },
-    { href: "/about", labelEn: "ABOUT", labelPt: "SOBRE" },
-    { href: "/contact", labelEn: "CONTACT", labelPt: "CONTACTO" },
-  ];
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: "-40% 0px -55% 0px" }
+    );
+    sections.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-sm border-b border-border/40">
+    <header className="sticky top-0 z-50 w-full bg-primary">
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-        <Link href="/" className="group flex items-center gap-4">
-          <div className="flex flex-col">
-            <div className="flex items-center gap-3">
-              <span className="font-serif text-3xl font-semibold tracking-wide text-primary">ARA</span>
-              <span className="w-px h-5 bg-muted-foreground/40"></span>
-              <span className="font-sans text-xs font-medium tracking-[0.2em] text-foreground mt-1 uppercase">
-                Real Estate
-              </span>
-            </div>
-            <span className="font-sans text-[0.6rem] font-medium tracking-[0.15em] text-muted-foreground mt-0.5 uppercase hidden sm:block">
-              Advisory · Investment · Asset Management
-            </span>
-          </div>
-        </Link>
+        <button
+          onClick={() => scrollTo("home")}
+          className="group flex items-center gap-3 cursor-pointer"
+          data-testid="nav-logo"
+        >
+          <span className="font-serif text-3xl font-semibold tracking-wide text-primary-foreground">ARA</span>
+          <span className="w-px h-5 bg-primary-foreground/30"></span>
+          <span className="font-sans text-xs font-medium tracking-[0.2em] text-primary-foreground/80 mt-0.5 uppercase">
+            Real Estate
+          </span>
+        </button>
 
-        {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
           <nav className="flex items-center gap-8">
-            {links.map((link) => (
-              <Link 
-                key={link.href} 
-                href={link.href}
-                className={`font-sans text-xs tracking-widest uppercase transition-colors hover:text-primary ${
-                  location === link.href ? "text-primary font-medium" : "text-muted-foreground"
+            {sections.map((s) => (
+              <button
+                key={s.id}
+                onClick={() => scrollTo(s.id)}
+                data-testid={`nav-link-${s.id}`}
+                className={`font-sans text-xs tracking-widest uppercase transition-colors cursor-pointer ${
+                  activeSection === s.id
+                    ? "text-primary-foreground font-medium"
+                    : "text-primary-foreground/50 hover:text-primary-foreground"
                 }`}
               >
-                {t(link.labelEn, link.labelPt)}
-              </Link>
+                {t(s.labelEn, s.labelPt)}
+              </button>
             ))}
           </nav>
-          
-          <div className="w-px h-4 bg-border"></div>
-          
-          <div className="flex items-center gap-2 font-sans text-xs tracking-widest text-muted-foreground">
-            <button 
+
+          <div className="w-px h-4 bg-primary-foreground/20"></div>
+
+          <div className="flex items-center gap-2 font-sans text-xs tracking-widest text-primary-foreground/50">
+            <button
               onClick={() => setLanguage("EN")}
-              className={`hover:text-primary transition-colors ${language === "EN" ? "text-primary font-medium" : ""}`}
+              data-testid="lang-en"
+              className={`hover:text-primary-foreground transition-colors ${language === "EN" ? "text-primary-foreground font-medium" : ""}`}
             >
               EN
             </button>
-            <span>|</span>
-            <button 
+            <span className="text-primary-foreground/30">|</span>
+            <button
               onClick={() => setLanguage("PT")}
-              className={`hover:text-primary transition-colors ${language === "PT" ? "text-primary font-medium" : ""}`}
+              data-testid="lang-pt"
+              className={`hover:text-primary-foreground transition-colors ${language === "PT" ? "text-primary-foreground font-medium" : ""}`}
             >
               PT
             </button>
           </div>
         </div>
 
-        {/* Mobile Toggle */}
-        <button 
-          className="md:hidden p-2 text-foreground"
+        <button
+          className="md:hidden p-2 text-primary-foreground"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          data-testid="mobile-menu-toggle"
         >
           {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div 
+          <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="md:hidden border-b border-border bg-background overflow-hidden"
+            className="md:hidden border-t border-primary-foreground/10 bg-primary overflow-hidden"
           >
             <div className="container mx-auto px-6 py-6 flex flex-col gap-6">
-              <nav className="flex flex-col gap-4">
-                {links.map((link) => (
-                  <Link 
-                    key={link.href} 
-                    href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`font-sans text-sm tracking-widest uppercase ${
-                      location === link.href ? "text-primary" : "text-muted-foreground"
+              <nav className="flex flex-col gap-5">
+                {sections.map((s) => (
+                  <button
+                    key={s.id}
+                    onClick={() => { scrollTo(s.id); setMobileMenuOpen(false); }}
+                    className={`font-sans text-sm tracking-widest uppercase text-left ${
+                      activeSection === s.id ? "text-primary-foreground" : "text-primary-foreground/50"
                     }`}
                   >
-                    {t(link.labelEn, link.labelPt)}
-                  </Link>
+                    {t(s.labelEn, s.labelPt)}
+                  </button>
                 ))}
               </nav>
-              <div className="flex items-center gap-4 font-sans text-sm tracking-widest text-muted-foreground pt-4 border-t border-border">
-                <button 
+              <div className="flex items-center gap-4 font-sans text-sm tracking-widest pt-4 border-t border-primary-foreground/10">
+                <button
                   onClick={() => { setLanguage("EN"); setMobileMenuOpen(false); }}
-                  className={language === "EN" ? "text-primary" : ""}
+                  className={language === "EN" ? "text-primary-foreground" : "text-primary-foreground/40"}
                 >
                   EN
                 </button>
-                <button 
+                <button
                   onClick={() => { setLanguage("PT"); setMobileMenuOpen(false); }}
-                  className={language === "PT" ? "text-primary" : ""}
+                  className={language === "PT" ? "text-primary-foreground" : "text-primary-foreground/40"}
                 >
                   PT
                 </button>
