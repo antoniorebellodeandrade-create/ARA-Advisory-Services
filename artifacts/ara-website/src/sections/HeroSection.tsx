@@ -48,28 +48,25 @@ export function HeroSection() {
           transition={{ duration: 1, delay: 0.5 }}
           className="border-t border-primary-foreground/10 pt-12"
         >
-          <p className="font-sans text-sm text-primary-foreground/60 mb-10 max-w-2xl">
+          <p className="font-sans text-sm text-primary-foreground/60 mb-8 max-w-2xl leading-relaxed">
             {t(
               "ARA Real Estate advises investors, owners and selected market players across the full real estate investment cycle.",
               "ARA Real Estate aconselha investidores, proprietários e players do mercado em todas as fases do ciclo de investimento imobiliário."
             )}
           </p>
-          <div className="flex flex-wrap gap-x-10 gap-y-4">
+          <p className="font-sans text-xs tracking-widest uppercase text-primary-foreground/35">
             {[
               { en: "Advisory", pt: "Advisory" },
               { en: "Investment & Asset Management", pt: "Investimento e Gestão de Activos" },
               { en: "Development & Project Management", pt: "Promoção Imobiliária e Gestão de Projecto" },
               { en: "Transactions", pt: "Transacções" },
-            ].map((s, i) => (
-              <button
-                key={i}
-                onClick={() => scrollTo("services")}
-                className="font-sans text-xs tracking-widest uppercase text-primary-foreground/40 hover:text-primary-foreground/80 transition-colors cursor-pointer"
-              >
+            ].map((s, i, arr) => (
+              <span key={i}>
                 {t(s.en, s.pt)}
-              </button>
+                {i < arr.length - 1 && <span className="mx-4 text-primary-foreground/20">·</span>}
+              </span>
             ))}
-          </div>
+          </p>
         </motion.div>
       </div>
     </section>

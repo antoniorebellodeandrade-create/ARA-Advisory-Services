@@ -44,7 +44,7 @@ export function ServicesSection() {
           <span className="font-sans text-xs tracking-[0.2em] text-muted-foreground uppercase block mb-5">
             {t("SERVICES", "SERVIÇOS")}
           </span>
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground font-semibold leading-tight mb-6 max-w-3xl">
+          <h2 className="font-serif text-3xl md:text-4xl text-foreground font-semibold leading-tight mb-6 max-w-3xl">
             {t(
               "Senior advisory across the full real estate investment cycle.",
               "Advisory em todas as fases do ciclo de investimento imobiliário."
