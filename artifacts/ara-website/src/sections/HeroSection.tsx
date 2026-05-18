@@ -6,13 +6,6 @@ function scrollTo(id: string) {
   if (el) el.scrollIntoView({ behavior: "smooth" });
 }
 
-const SERVICES = [
-  { en: "Advisory", pt: "Advisory" },
-  { en: "Investment & Asset Management", pt: "Investimento e Gestão de Activos" },
-  { en: "Development & Project Management", pt: "Promoção Imobiliária e Gestão de Projecto" },
-  { en: "Transactions", pt: "Transacções" },
-];
-
 export function HeroSection() {
   const { t } = useLanguage();
 
@@ -26,12 +19,13 @@ export function HeroSection() {
       <div
         className="absolute bottom-0 right-0 font-serif font-semibold select-none pointer-events-none leading-none"
         style={{ fontSize: "22vw", opacity: 0.045, color: "currentColor", transform: "translate(4%, 8%)" }}
-      >
-        ARA
-      </div>
+      />
 
       {/* Hero body */}
-      <div className="flex-1 flex flex-col justify-center px-8 md:px-16 py-12 relative z-10">
+      <div
+        className="flex-1 flex flex-col justify-center relative z-10"
+        style={{ padding: "3rem 2rem" }}
+      >
         <div style={{ maxWidth: "52rem" }}>
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -88,55 +82,6 @@ export function HeroSection() {
           </motion.div>
         </div>
       </div>
-
-      {/* Transition bridge to Services */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.1, delay: 0.55 }}
-        className="relative z-10"
-        style={{ borderTop: "1px solid rgba(246,244,239,0.1)", padding: "1.75rem 2rem 1.75rem" }}
-      >
-        <div style={{ maxWidth: "52rem", margin: "0 auto" }}>
-          <p
-            className="font-sans"
-            style={{ fontSize: "0.9375rem", color: "rgba(246,244,239,0.72)", lineHeight: 1.7, marginBottom: "1.25rem", maxWidth: "40rem" }}
-          >
-            {t(
-              "ARA Real Estate advises investors, owners and selected market players across the full real estate investment cycle.",
-              "ARA Real Estate aconselha investidores, proprietários e players do mercado em todas as fases do ciclo de investimento imobiliário."
-            )}
-          </p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0", alignItems: "center" }}>
-            {SERVICES.map((s, i) => (
-              <span key={i} style={{ display: "flex", alignItems: "center" }}>
-                <button
-                  onClick={() => scrollTo("services")}
-                  className="font-sans"
-                  style={{
-                    background: "none",
-                    border: "none",
-                    padding: 0,
-                    cursor: "pointer",
-                    fontSize: "0.7rem",
-                    letterSpacing: "0.12em",
-                    textTransform: "uppercase",
-                    color: "rgba(246,244,239,0.5)",
-                    transition: "color 0.2s",
-                  }}
-                  onMouseEnter={e => ((e.currentTarget as HTMLButtonElement).style.color = "rgba(246,244,239,0.85)")}
-                  onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.color = "rgba(246,244,239,0.5)")}
-                >
-                  {t(s.en, s.pt)}
-                </button>
-                {i < SERVICES.length - 1 && (
-                  <span style={{ color: "rgba(246,244,239,0.25)", fontSize: "0.75rem", margin: "0 0.875rem" }}>·</span>
-                )}
-              </span>
-            ))}
-          </div>
-        </div>
-      </motion.div>
     </section>
   );
 }

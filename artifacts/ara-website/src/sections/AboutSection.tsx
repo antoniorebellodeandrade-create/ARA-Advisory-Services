@@ -17,10 +17,17 @@ export function AboutSection() {
           style={{ marginBottom: "4rem" }}
         >
           <span
-            className="font-sans"
-            style={{ fontSize: "0.65rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--color-muted-foreground)", display: "block", marginBottom: "1.25rem" }}
+            className="font-sans font-medium"
+            style={{
+              fontSize: "0.875rem",
+              letterSpacing: "0.28em",
+              textTransform: "uppercase",
+              color: "var(--color-primary)",
+              display: "block",
+              marginBottom: "1.5rem",
+            }}
           >
-            {t("ABOUT", "SOBRE")}
+            {t("About", "Sobre")}
           </span>
           <h2
             className="font-serif font-semibold"

@@ -36,7 +36,7 @@ export function ContactSection() {
 
   return (
     <section id="contact" className="bg-background" style={{ borderTop: "1px solid var(--color-border)", padding: "6rem 2rem" }}>
-      <div style={{ maxWidth: "60rem", margin: "0 auto" }}>
+      <div style={{ maxWidth: "52rem", margin: "0 auto" }}>
 
         {/* Header */}
         <motion.div
@@ -47,10 +47,17 @@ export function ContactSection() {
           style={{ marginBottom: "4rem" }}
         >
           <span
-            className="font-sans"
-            style={{ fontSize: "0.65rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--color-muted-foreground)", display: "block", marginBottom: "1.25rem" }}
+            className="font-sans font-medium"
+            style={{
+              fontSize: "0.875rem",
+              letterSpacing: "0.28em",
+              textTransform: "uppercase",
+              color: "var(--color-primary)",
+              display: "block",
+              marginBottom: "1.5rem",
+            }}
           >
-            {t("CONTACT", "CONTACTO")}
+            {t("Contact", "Contacto")}
           </span>
           <h2
             className="font-serif font-semibold"
@@ -70,7 +77,7 @@ export function ContactSection() {
         </motion.div>
 
         {/* Two-column: contacts + form */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 22rem), 1fr))", gap: "4rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 20rem), 1fr))", gap: "4rem" }}>
 
           {/* Direct contacts */}
           <motion.div
@@ -117,7 +124,7 @@ export function ContactSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6, delay: 0.12 }}
-            style={{ border: "1px solid var(--color-border)", padding: "2.5rem" }}
+            style={{ border: "1.5px solid var(--color-primary)", padding: "2.5rem" }}
           >
             {submitted ? (
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "4rem 0" }}>
