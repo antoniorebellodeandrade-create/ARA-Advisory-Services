@@ -181,6 +181,20 @@
   --shadow-2xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.05);
 }
 
+/* Nav header inner: full-width on desktop, constrained on mobile */
+.nav-header-inner {
+  width: 100%;
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+@media (min-width: 768px) {
+  .nav-header-inner {
+    max-width: none;
+    padding: 0 3rem;
+  }
+}
+
 @layer base {
   * {
     @apply border-border;

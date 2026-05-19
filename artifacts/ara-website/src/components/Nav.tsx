@@ -40,7 +40,7 @@ export function Nav() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-primary">
-      <div className="h-20 flex items-center justify-between" style={{ maxWidth: "52rem", margin: "0 auto", width: "100%", padding: "0 2rem" }}>
+      <div className="h-20 flex items-center justify-between nav-header-inner">
         <button
           onClick={() => scrollTo("home")}
           className="group flex items-center gap-3 cursor-pointer"
