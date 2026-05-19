@@ -3,7 +3,7 @@ import { useLanguage } from "../context/LanguageContext";
 export function Footer() {
   return (
     <footer className="bg-background border-t border-border py-10">
-      <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-4" style={{ maxWidth: "52rem", margin: "0 auto", width: "100%", padding: "0 2rem" }}>
         <div className="flex items-center gap-3">
           <span className="font-serif text-xl font-semibold text-primary">ARA</span>
           <span className="w-px h-4 bg-muted-foreground/40"></span>

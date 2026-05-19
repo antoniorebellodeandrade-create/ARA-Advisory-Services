@@ -40,7 +40,7 @@ export function Nav() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-primary">
-      <div className="container mx-auto px-6 h-20 flex items-center justify-between">
+      <div className="h-20 flex items-center justify-between" style={{ maxWidth: "52rem", margin: "0 auto", width: "100%", padding: "0 2rem" }}>
         <button
           onClick={() => scrollTo("home")}
           className="group flex items-center gap-3 cursor-pointer"
@@ -109,12 +109,12 @@ export function Nav() {
             exit={{ height: 0, opacity: 0 }}
             className="md:hidden border-t border-primary-foreground/10 bg-primary overflow-hidden"
           >
-            <div className="container mx-auto px-6 py-6 flex flex-col gap-6">
+            <div style={{ maxWidth: "52rem", margin: "0 auto", width: "100%", padding: "1.5rem 2rem" }} className="flex flex-col gap-6">
               <nav className="flex flex-col gap-5">
                 {sections.map((s) => (
                   <button
                     key={s.id}
-                    onClick={() => { scrollTo(s.id); setMobileMenuOpen(false); }}
+                    onClick={() => { setMobileMenuOpen(false); setTimeout(() => scrollTo(s.id), 320); }}
                     className={`font-sans text-sm tracking-widest uppercase text-left ${
                       activeSection === s.id ? "text-primary-foreground" : "text-primary-foreground/50"
                     }`}
