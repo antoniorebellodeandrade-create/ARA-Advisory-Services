@@ -1,14 +1,46 @@
 import { useLanguage } from "../context/LanguageContext";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export function ContactSection() {
   const { t } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitting(true);
+    setError(null);
+
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(data),
+      });
+      const json = await res.json();
+      if (res.ok && json.success) {
+        setSubmitted(true);
+        formRef.current?.reset();
+      } else {
+        setError(t(
+          "Something went wrong. Please try again or email directly.",
+          "Ocorreu um erro. Por favor tente de novo ou envie email directamente."
+        ));
+      }
+    } catch {
+      setError(t(
+        "Could not send your message. Please check your connection and try again.",
+        "Não foi possível enviar a mensagem. Verifique a sua ligação e tente de novo."
+      ));
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const inputStyle: React.CSSProperties = {
@@ -145,28 +177,44 @@ export function ContactSection() {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.75rem" }}>
+              <form ref={formRef} onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.75rem" }}>
+
+                {/* Web3Forms hidden fields */}
+                <input type="hidden" name="access_key" value="958999fa-5fa3-4bf9-aad4-593e98896f4c" />
+                <input type="hidden" name="subject" value="New contact from ARA Real Estate website" />
+                <input type="hidden" name="from_name" value="ARA Real Estate Website" />
+
+                {/* Honeypot — hidden from real users, traps bots */}
+                <input
+                  type="checkbox"
+                  name="botcheck"
+                  style={{ display: "none" }}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+
                 <div>
                   <label style={labelStyle}>{t("Name", "Nome")} *</label>
-                  <input type="text" required data-testid="input-name" style={inputStyle} />
+                  <input type="text" name="name" required data-testid="input-name" style={inputStyle} />
                 </div>
                 <div>
                   <label style={labelStyle}>Email *</label>
-                  <input type="email" required data-testid="input-email" style={inputStyle} />
+                  <input type="email" name="email" required data-testid="input-email" style={inputStyle} />
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(9rem, 1fr))", gap: "1.5rem" }}>
                   <div>
                     <label style={labelStyle}>{t("Phone", "Telefone")} *</label>
-                    <input type="tel" required data-testid="input-phone" style={inputStyle} />
+                    <input type="tel" name="phone" required data-testid="input-phone" style={inputStyle} />
                   </div>
                   <div>
                     <label style={labelStyle}>{t("Company (optional)", "Empresa (opcional)")}</label>
-                    <input type="text" data-testid="input-company" style={inputStyle} />
+                    <input type="text" name="company" data-testid="input-company" style={inputStyle} />
                   </div>
                 </div>
                 <div>
                   <label style={labelStyle}>{t("How can I help?", "Como posso ajudar?")} *</label>
                   <textarea
+                    name="message"
                     required
                     rows={4}
                     data-testid="input-message"
@@ -176,10 +224,11 @@ export function ContactSection() {
                 <div>
                   <button
                     type="submit"
+                    disabled={submitting}
                     data-testid="button-submit"
                     style={{
                       width: "100%",
-                      background: "var(--color-primary)",
+                      background: submitting ? "var(--color-primary)/80" : "var(--color-primary)",
                       color: "var(--color-primary-foreground)",
                       border: "none",
                       padding: "1rem",
@@ -187,11 +236,25 @@ export function ContactSection() {
                       fontSize: "0.65rem",
                       letterSpacing: "0.2em",
                       textTransform: "uppercase",
-                      cursor: "pointer",
+                      cursor: submitting ? "not-allowed" : "pointer",
+                      opacity: submitting ? 0.7 : 1,
+                      transition: "opacity 0.2s",
                     }}
                   >
-                    {t("SEND MESSAGE", "ENVIAR MENSAGEM")}
+                    {submitting
+                      ? t("SENDING…", "A ENVIAR…")
+                      : t("SEND MESSAGE", "ENVIAR MENSAGEM")}
                   </button>
+
+                  {error && (
+                    <p
+                      className="font-sans"
+                      style={{ fontSize: "0.75rem", color: "#b91c1c", marginTop: "0.75rem", textAlign: "center", lineHeight: 1.5 }}
+                    >
+                      {error}
+                    </p>
+                  )}
+
                   <p
                     className="font-sans"
                     style={{ textAlign: "center", fontSize: "0.7rem", color: "var(--color-muted-foreground)", marginTop: "1rem" }}
